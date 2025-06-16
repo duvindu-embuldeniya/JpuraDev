@@ -3,6 +3,11 @@
 
 {% block content %}
 
-    home.....
+    {% for project in projects %}
+
+        <a href="{% url 'project' project.id %}">{{project.id}}</a> | {{project.title}} | {{project.description}}
+        <br>
+
+    {% endfor %}
 
 {% endblock content %}
