@@ -1,29 +1,18 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-
-
-
-projectsList = [
-
-{'id': 1, 'title': 'Ecommerce Website', 'description': 'Fully functional ecommerce website' },
-
-{ 'id': 2, 'title': 'Portfolio Website', 'description': 'A personal website to write articles and display work' },
-
-{'id': 3, 'title': 'Social Network', 'description': 'An open source project built by the community' }
-
-]
+from . models import Project, Review, Tag
 
 
 
 def home(request):
-    context = {'projects':projectsList}
+    projects = Project.objects.all()
+    context = {'projects':projects}
     return render(request, 'home/index.html', context)
 
 
 def project(request, pk):
-    item = None
-    for per in projectsList:
-        if per['id'] == pk:
-            item = per
-    context = {'item':item}
+    project = Project.objects.get(id = pk)
+    reviews = project.review_set.all()
+    tags = project.tag_set.all()
+    context = {'project':project, 'reviews':reviews, 'tags':tags}
     return render(request, 'home/project.html', context)

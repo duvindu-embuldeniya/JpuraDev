@@ -3,6 +3,15 @@
 
 {% block content %}
 
-    {{item.id}} | {{item.title}} | {{item.description}}
+    {{project.id}} | {{project.title}} | {{project.description}}
+    <br><br>
+    {% for tag in tags %}
+        {{tag.name}} <br>
+    {% endfor %}
+    <br>
+
+    {% for review in reviews %}
+        {{review.body}} | {{review.value}} <br>
+    {% endfor %}
 
 {% endblock content %}
