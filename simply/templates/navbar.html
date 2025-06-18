@@ -1,11 +1,25 @@
 {% load static %}
-
-
-<a href="{% url 'home' %}">
-    <img src="{% static 'static_web_images/logo.png/' %}" alt="logo" height="100px" width="100px">
-</a>
-
-
-<a href="{% url 'project-create' %}">+Project</a>
-
-<hr>
+  
+  <header class="header">
+    <div class="container container--narrow">
+      <a href="{% url 'home' %}" class="header__logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+        <img src="{% static 'static_web_images/logo.png' %}" alt="DevSearch Logo" style="height: 40px; width: auto;">
+        <h1 style="margin: 0; font-size: 2rem; color: white; font-weight: 550;">j'Pura Dev</h1>
+      </a>
+      <nav class="header__nav">
+        <input type="checkbox" id="responsive-menu" />
+        <label for="responsive-menu" class="toggle-menu">
+          <span>Menu</span>
+          <div class="toggle-menu__lines"></div>
+        </label>
+        <ul class="header__menu">
+          <li class="header__menuItem"><a href="{% url 'home' %}">Developers</a></li>
+          <li class="header__menuItem"><a href="{% url 'projects' %}">Projects</a></li>
+          <li class="header__menuItem"><a href="">Inbox</a></li>
+          <!-- <li class="header__menuItem"><a href="">My Account</a></li> -->
+          <li class="header__menuItem"><a href="{% url 'project-create' %}">+Project</a></li>
+          <li class="header__menuItem"><a href="" class="btn btn--sub">Login/Sign Up</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>

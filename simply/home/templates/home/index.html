@@ -3,23 +3,80 @@
 
 {% block content %}
 
-    {% for project in projects %}
+  <!-- Main Section -->
+  <main class="home">
+    <section class="hero-section text-center">
+      <div class="container container--narrow">
+        <div class="hero-section__box">
+          <h2>CONNECT WITH <span>DEVELOPERS</span></h2>
+          <h2>FROM AROUND THE FACULTY</h2>
+        </div>
 
-        <a href="{% url 'project' project.id %}">{{project.id}}</a> | {{project.title}} | {{project.description}}
-        <br><br>
+        <div class="hero-section__search">
+          <form class="form" action="#" method="get">
+            <div class="form__field">
+              <label for="formInput#search">Search Developers </label>
+              <input class="input input--text" id="formInput#search" type="text" name="text"
+                placeholder="Search by developer name" />
+            </div>
 
-        {% if project.image %}
-            <img src="{{project.image.url}}" alt="project_image" height="100px" width="100px">
-        {% else %}
-            <img src="{% static 'static_project_model/default.jpg/' %}" alt="project_image" height="100px" width="100px">
-        {% endif %}
+            <input class="btn btn--sub btn--lg" type="submit" value="Search" />
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- Search Result: DevList -->
+    <section class="devlist">
+      <div class="container">
+        <div class="grid grid--three">
 
-        <br><br>
-        ||  <a href="{% url 'project-update' project.pk %}">Update</a> 
-        ||  <a href="{% url 'project-delete' project.pk %}">Delete</a>
-        <br>
-        <hr>
+            
+          <div class="column card">
+            <div class="dev">
+              <a href="/profile.html" class="card__body">
+                <div class="dev__profile">
+                  <img class="avatar avatar--md" src="https://avatars.githubusercontent.com/u/22437186" alt="image" />
+                  <div class="dev__meta">
+                    <h3>Shahriar P. Shuvo</h3>
+                    <h5>FullStack Web Designer & Developer</h5>
+                  </div>
+                </div>
+                <p class="dev__info">
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cupiditate, ducimus inventore! Sunt,
+                  veniam veritatis? Veritatis placeat, deleniti iure tempore veniam perspiciatis, soluta cupiditate
+                  animi, exercitationem molestias nam doloremque architecto odit.
+                </p>
+                <div class="dev__skills">
+                  <span class="tag tag--pill tag--main">
+                    <small>JavaScript</small>
+                  </span>
+                  <span class="tag tag--pill tag--main">
+                    <small>React</small>
+                  </span>
+                  <span class="tag tag--pill tag--main">
+                    <small>SCSS</small>
+                  </span>
+                  <span class="tag tag--pill tag--main">
+                    <small>Nodejs</small>
+                  </span>
+                  <span class="tag tag--pill tag--main">
+                    <small>Express</small>
+                  </span>
+                  <span class="tag tag--pill tag--main">
+                    <small>GraphQL</small>
+                  </span>
+                </div>
+              </a>
+            </div>
+          </div>
 
-    {% endfor %}
+
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
 
 {% endblock content %}

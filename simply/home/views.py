@@ -6,14 +6,17 @@ from django.contrib import messages
 
 
 def home(request):
+    return render(request, 'home/index.html')
+
+
+def projects(request):
     projects = Project.objects.all()
     context = {'projects':projects}
-    return render(request, 'home/index.html', context)
+    return render(request, 'home/projects.html', context)
 
 
 def project(request, pk):
     project = Project.objects.get(id = pk)
-
     context = {'project':project}
     return render(request, 'home/project_info.html', context)
 
