@@ -1,14 +1,24 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 {% block content %}
 
     {% for project in projects %}
 
         <a href="{% url 'project' project.id %}">{{project.id}}</a> | {{project.title}} | {{project.description}}
+        <br><br>
+
+        {% if project.image %}
+            <img src="{{project.image.url}}" alt="project_image" height="100px" width="100px">
+        {% else %}
+            <img src="{% static 'static_project_model/default.jpg/' %}" alt="project_image" height="100px" width="100px">
+        {% endif %}
+
+        <br><br>
         ||  <a href="{% url 'project-update' project.pk %}">Update</a> 
-        || <a href="{% url 'project-delete' project.pk %}">Delete</a>
+        ||  <a href="{% url 'project-delete' project.pk %}">Delete</a>
         <br>
+        <hr>
 
     {% endfor %}
 

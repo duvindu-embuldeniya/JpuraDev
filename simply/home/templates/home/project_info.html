@@ -1,17 +1,15 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 {% block content %}
 
     {{project.id}} | {{project.title}} | {{project.description}}
     <br><br>
-    {% for tag in tags %}
-        {{tag.name}} <br>
-    {% endfor %}
-    <br>
 
-    {% for review in reviews %}
-        {{review.body}} | {{review.value}} <br>
-    {% endfor %}
+    {% if project.image %}
+        <img src="{{project.image.url}}" alt="project_image" height="100px" width="100px">
+    {% else %}
+        <img src="{% static 'static_project_model/default.jpg/' %}" alt="project_image" height="100px" width="100px">
+    {% endif %}
 
 {% endblock content %}

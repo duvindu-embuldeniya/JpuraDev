@@ -5,7 +5,7 @@
 
     <h1>Project Form</h1>
 
-    <form action="" method="POST">
+    <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
             {{form.as_p}}
@@ -14,4 +14,4 @@
     </form>
 
 
-{% endblock content %}
+{% endblock content %} 

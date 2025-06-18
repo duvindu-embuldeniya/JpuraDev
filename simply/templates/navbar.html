@@ -1,6 +1,10 @@
+{% load static %}
+
+
 <a href="{% url 'home' %}">
-    <h1>Logo</h1>
+    <img src="{% static 'static_web_images/logo.png/' %}" alt="logo" height="100px" width="100px">
 </a>
+
 
 <a href="{% url 'project-create' %}">+Project</a>
 

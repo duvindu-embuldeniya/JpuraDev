@@ -13,16 +13,15 @@ def home(request):
 
 def project(request, pk):
     project = Project.objects.get(id = pk)
-    reviews = project.review_set.all()
-    tags = project.tag_set.all()
-    context = {'project':project, 'reviews':reviews, 'tags':tags}
+
+    context = {'project':project}
     return render(request, 'home/project_info.html', context)
 
 
 def project_create(request):
     form = ProjectForm()
     if request.method == 'POST':
-        form = ProjectForm(request.POST)
+        form = ProjectForm(request.POST, request.FILES)
         if form.is_valid():
             new_project = form.save()
             messages.success(request, "Project Created Successfully!")
@@ -35,7 +34,7 @@ def project_update(request,pk):
     project = Project.objects.get(id = pk)
     form = ProjectForm(instance=project)
     if request.method == 'POST':
-        form = ProjectForm(request.POST, instance=project)
+        form = ProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid():
             alt_project = form.save()
             messages.success(request, "Project Updated Successfully!")

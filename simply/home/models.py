@@ -10,6 +10,8 @@ class Project(models.Model):
     description = models.TextField(blank=True, null=True)
     # demo_link = models.CharField(max_length=200, blank=True, null=True)
     # tag = models.ManyToManyField(Tag, blank=True)
+    image = models.ImageField(
+        upload_to='uploaded_project_model/', blank=True, null=True)
     vote_total = models.IntegerField(default=0)
     vote_ratio = models.IntegerField(default=0)
     source_link = models.CharField(max_length=200, blank=True, null=True)
