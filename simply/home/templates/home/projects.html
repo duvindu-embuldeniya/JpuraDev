@@ -32,7 +32,7 @@
           {% for project in projects %}  
           <div class="column">
             <div class="card project">
-              <a href="{% url 'project' project.pk %}" class="project">
+              <a href="{% url 'project' project.id %}" class="project">
                 {% if project.image %}
                     <img class="project__thumbnail" src="{{project.image.url}}" alt="project thumbnail" />
                 {% else %}

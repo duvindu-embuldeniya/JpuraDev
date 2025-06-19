@@ -1,19 +1,38 @@
 from django.db import models
 import uuid
+from django.contrib.auth.models import User
+# id = models.UUIDField(default=uuid.uuid1, unique=True, primary_key=True, editable=False)
+# tag = models.ManyToManyField(Tag, blank=True)
+
+
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200, null=True)
+    short_intro = models.CharField(max_length=200, null=True)
+    bio = models.TextField(null=True)
+    location = models.CharField(max_length=200, null=True)
+    image = models.ImageField(upload_to='uploaded_profile_model/', blank=True, null=True)
+    github_url = models.CharField(max_length=200, blank=True, null=True)
+    linkedin_url = models.CharField(max_length=200, blank=True, null=True)
+    web_url = models.CharField(max_length=200, blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username}'s profile"
 
 
 
 
 class Project(models.Model):
-    # id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
-    description = models.TextField(blank=True, null=True)
-    # demo_link = models.CharField(max_length=200, blank=True, null=True)
-    # tag = models.ManyToManyField(Tag, blank=True)
+    description = models.TextField()
+    source_link = models.CharField(max_length=200, blank=True, null=True)
     image = models.ImageField(upload_to='uploaded_project_model/', blank=True, null=True)
     vote_total = models.IntegerField(default=0)
     vote_ratio = models.IntegerField(default=0)
-    source_link = models.CharField(max_length=200, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -27,9 +46,7 @@ class Review(models.Model):
         ('up', 'Up Vote'),
         ('down', 'Down Vote')
     )
-
-    # id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
-    # owner = 
+    owner = models.ForeignKey(User, on_delete = models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     body = models.TextField()
     value = models.CharField(max_length=200, choices=VOTE_TYPE)
@@ -42,7 +59,6 @@ class Review(models.Model):
 
 
 class Tag(models.Model):
-    # id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=True)
     name = models.CharField(max_length=200)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     created = models.DateField(auto_now_add=True)
