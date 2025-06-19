@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from . models import Project, Review, Tag
+from . models import Project, Review, Tag, Profile, Skill
 from . forms import ProjectForm
 from django.contrib import messages
 from django.contrib.auth.models import User,auth
@@ -60,4 +60,9 @@ def project_delete(request,id):
 
 
 def profile(request,username):
-    return render(request, 'home/profile.html')
+    current_user = User.objects.get(username = username)
+    projects = current_user.project_set.all()
+    top_skills = current_user.skill_set.exclude(description__exact = '')
+    mini_skills = current_user.skill_set.filter(description__exact = '')
+    context = {'current_user':current_user, 'projects':projects, 'top_skills':top_skills, 'mini_skills':mini_skills}
+    return render(request, 'home/profile.html', context)
