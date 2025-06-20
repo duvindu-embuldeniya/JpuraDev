@@ -4,6 +4,9 @@ from . models import Project, Review, Tag, Profile, Skill
 from . forms import ProjectForm
 from django.contrib import messages
 from django.contrib.auth.models import User,auth
+from django.contrib.auth.decorators import login_required
+
+
 
 
 def home(request):
@@ -12,10 +15,51 @@ def home(request):
     return render(request, 'home/index.html', context)
 
 
+
+
+def register(request):
+    return render(request, 'home/register.html')
+
+
+
+
+def login(request):
+    if request.user.is_authenticated:
+        messages.info(request, "You've Already Loged-In!")
+        return redirect('home')
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        auth_user = auth.authenticate(username = username, password = password)
+        if auth_user is not None:
+            auth.login(request, auth_user)
+            messages.success(request, "Successfully Loged-In!")
+            return redirect(request.GET.get('next') if request.GET.get('next') else 'home')
+        else:
+            messages.error(request, "User Doesn't Exist!")
+            return redirect('login')
+    return render(request, 'home/login.html')
+
+
+
+
+def logout(request):
+    if not(request.user.is_authenticated):
+        messages.info(request, "You've Not Logd-In!")
+        return redirect('home')
+    auth.logout(request)
+    messages.success(request, "Successfully Loged-Out!")
+    return redirect('home')
+
+
+
+
 def projects(request):
     projects = Project.objects.all()
     context = {'projects':projects}
     return render(request, 'home/projects.html', context)
+
+
 
 
 def project(request, id):
@@ -24,6 +68,9 @@ def project(request, id):
     return render(request, 'home/project_info.html', context)
 
 
+
+
+@login_required
 def project_create(request):
     form = ProjectForm()
     if request.method == 'POST':
@@ -36,8 +83,13 @@ def project_create(request):
     return render(request, 'home/project_create.html', context)
 
 
+
+
+@login_required
 def project_update(request,id):
     project = Project.objects.get(id = id)
+    if request.user != project.owner:
+        return HttpResponse('<h1>043 Forbidden!')
     form = ProjectForm(instance=project)
     if request.method == 'POST':
         form = ProjectForm(request.POST, request.FILES, instance=project)
@@ -49,14 +101,21 @@ def project_update(request,id):
     return render(request, 'home/project_update.html', context)
 
 
+
+
+@login_required
 def project_delete(request,id):
     project = Project.objects.get(id = id)
+    if request.user != project.owner:
+        return HttpResponse('<h1>043 Forbidden!')
     if request.method == 'POST':
         project.delete()
         messages.success(request, 'Project Deleted Successfully')
         return redirect('home')
     context = {'project':project}
     return render(request, 'home/project_delete.html', context)
+
+
 
 
 def profile(request,username):
