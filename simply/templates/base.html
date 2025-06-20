@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="{% static 'uikit/styles/uikit.css' %}" />
     <!-- Dev Search UI -->
     <link rel="stylesheet" href="{% static 'styles/app.css' %}" />
+    <!-- For Flash Messages -->
+    <link rel="stylesheet" href="{% static 'styles/custom.css' %}">
 
     <title>J'Pura Dev</title>
 
@@ -25,11 +27,7 @@
 
     {% include 'navbar.html' %}
 
-    {% if messages %}
-        {% for message in messages %}
-            <strong>{{message}}</strong>
-        {% endfor %}
-    {% endif %}
+
 
     {% block content %}
     {% endblock content %}

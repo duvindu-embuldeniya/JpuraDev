@@ -1,17 +1,59 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 {% block content %}
 
 
-    <form action="" method="POST">
-        {% csrf_token %}
+        <div class="auth">
+        <div class="card">
+            <div class="auth__header text-center">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'static_web_images/icon.svg' %}" alt="icon" />
+            </a>
+            <h3>Account SignUp</h3>
+            <p>Create a new developer account</p>
+            </div>
 
-            {{form.as_p}}
+            <form action="" method="POST" class="form auth__form" autocomplete="off">
+                {% csrf_token %}
+            <!-- Input:Text -->
 
-        <button type="submit">Register</button>
-        <a href="{% url 'login' %}">Already Have An Account</a>
-    </form>
+            {% for field in form %}
+                <div class="form__field">
+                    <label for="formInput#text">{{field.label}} </label>
+                    <!-- <input
+                    class="input input--text"
+                    id="formInput#text"
+                    type="text"
+                    name="text"
+                    placeholder="e.g. Dennis Ivanov"
+                    /> -->
+                    {{field}}
+
+                    {% if field.help_text %}
+                        <small>{{field.help_text}}</small>
+                    {% endif %}
+
+                    {% for error in field.errors %}
+                        <p style="color: red;">
+                            <small>{{error}}</small>
+                        </p>
+                    {% endfor %}
+
+                </div>
+            {% endfor %}
+
+            <div class="auth__actions">
+                <input class="btn btn--sub btn--lg" type="submit" value="Sign  In" />
+            </div>
+            </form>
+            <div class="auth__alternative">
+            <p>Already have an Account?</p>
+            <a href="{% url 'login' %}">Log In</a>
+            </div>
+        </div>
+        </div>
+
 
 
 {% endblock content %}

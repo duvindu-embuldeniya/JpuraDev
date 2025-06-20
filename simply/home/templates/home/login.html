@@ -1,25 +1,61 @@
 {% extends 'base.html' %}
+{% load static %}
 
 
 {% block content %}
 
 
-    <form action="" method="POST">
-        {% csrf_token %}
+    <div class="auth">
+      <div class="card">
+        <div class="auth__header text-center">
+          <a href="{% url 'home' %}">
+            <img src="{% static 'static_web_images/icon.svg' %}" alt="icon" />
+          </a>
+          <h3>Account Login</h3>
+          <p>Hello Developer, Welcome Back!</p>
+        </div>
 
-        <label for="">Username :- </label>
-        <input type="text" name="username" required>
+        <form action="" method="POST" class="form auth__form" autocomplete="off">
+          {% csrf_token %}
 
-        <br><br>
+          <!-- Input:Email -->
+          <div class="form__field">
+            <label for="formInput#text">Username: </label>
+            <input
+              class="input input--text"
+              id="formInput#text"
+              type="text"
+              name="username"
+              placeholder="Enter your username..."
+              required
+            />
+          </div>
 
-        <label for="">Password :- </label>
-        <input type="password" name="password" required>
+          <!-- Input:Password -->
+          <div class="form__field">
+            <label for="formInput#password">Password: </label>
+            <input
+              class="input input--password"
+              id="formInput#passowrd"
+              type="password"
+              name="password"
+              placeholder="••••••••"
+              required
+            />
+          </div>
 
-        <br><br>
+          <div class="auth__actions">
+            <input class="btn btn--sub btn--lg" type="submit" value="Log In" />
+            <a href="#">Forget Password?</a>
+          </div>
+        </form>
+        <div class="auth__alternative">
+          <p>Don’t have an Account?</p>
+          <a href="{% url 'register' %}">Sign Up</a>
+        </div>
+      </div>
+    </div>
 
-        <button type="submit">Login</button>
-        <a href="{% url 'register' %}">Haven't Sign-Up</a>
-    </form>
 
 
 {% endblock content %}

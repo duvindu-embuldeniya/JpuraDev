@@ -26,3 +26,19 @@
       </nav>
     </div>
   </header>
+
+
+      <div style="text-align: center;">
+        {% if messages %}
+          {% for message in messages %}
+            <div id="closer" style="display: inline-block;">
+                <div id="msg-{{message.tags}}" style="display: inline-block; 
+                    padding: 10px 10px; 
+                    border-radius: 5px;"> 
+                    <span style="color: black;" >{{ message }}</span>
+                </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+
