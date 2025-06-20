@@ -132,6 +132,7 @@ def project_delete(request,id):
 
 
 
+#what people see
 def profile(request,username):
     current_user = User.objects.get(username = username)
     projects = current_user.project_set.all()
@@ -139,3 +140,51 @@ def profile(request,username):
     mini_skills = current_user.skill_set.filter(description__exact = '')
     context = {'current_user':current_user, 'projects':projects, 'top_skills':top_skills, 'mini_skills':mini_skills}
     return render(request, 'home/profile.html', context)
+
+
+
+
+#my-account
+@login_required
+def my_account(request,username):
+    current_user = User.objects.get(username = username)
+    projects = current_user.project_set.all()
+    top_skills = current_user.skill_set.exclude(description__exact = '')
+    other_skills = current_user.skill_set.filter(description__exact = '')
+    context = {'current_user':current_user, 'projects':projects, 'top_skills':top_skills, 'other_skills':other_skills}
+    return render(request, 'home/account.html', context)
+
+
+
+
+@login_required
+def my_account_update(request,username):
+    pass
+
+
+
+
+@login_required
+def my_account_delete(request,pk):
+    pass
+
+
+
+
+@login_required
+def skill_create(request):
+    pass
+
+
+
+
+@login_required
+def skill_update(request,pk):
+    pass
+
+
+
+
+@login_required
+def skill_delete(request, pk):
+    pass

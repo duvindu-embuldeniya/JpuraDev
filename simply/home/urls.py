@@ -14,5 +14,9 @@ urlpatterns = [
     path('project-update/<int:id>/', project_update, name = 'project-update'),
     path('project-delete/<int:id>/', project_delete, name = 'project-delete'),
 
+    #what people see
     path('profile/<str:username>/', profile, name = 'profile'),
+
+    #my-account
+    path('account/<str:username>/', my_account, name = 'my-account')
 ]

@@ -20,15 +20,21 @@
               <p class="dev__title">{{current_user.profile.short_intro|slice:'60'}}</p>
               <p class="dev__location">Based in {{current_user.profile.location}}</p>
               <ul class="dev__social">
-                <li>
-                  <a title="Github" href="{{current_user.profile.github_url}}" target="_blank"><i class="im im-github"></i>Github</a>
-                </li>
-                <li>
-                  <a title="LinkedIn" href="{{current_user.profile.linkedin_url}}" target="_blank"><i class="im im-linkedin"></i>LinkedIn</a>
-                </li>
-                <li>
-                  <a title="Personal Website" href="{{current_user.profile.web_url}}" target="_blank"><i class="im im-globe">Web</i></a>
-                </li>
+                {% if current_user.profile.github_url %}
+                  <li>
+                    <a title="Github" href="{{current_user.profile.github_url}}" target="_blank"><i class="im im-github"></i>Github</a>
+                  </li>
+                {% endif %}
+                {% if current_user.profile.linkedin_url %}
+                  <li>
+                    <a title="LinkedIn" href="{{current_user.profile.linkedin_url}}" target="_blank"><i class="im im-linkedin"></i>LinkedIn</a>
+                  </li>
+                {% endif %}
+                {% if current_user.profile.web_url %}
+                  <li>
+                    <a title="Personal Website" href="{{current_user.profile.web_url}}" target="_blank"><i class="im im-globe">Web</i></a>
+                  </li>
+                {% endif %}
               </ul>
               {% if request.user != current_user %}
                 <a href="#" class="btn btn--sub btn--lg">Send Message </a>

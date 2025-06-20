@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+  <!-- Main Section -->
+  <main class="settingsPage profile my-md">
+    <div class="container">
+      <div class="layout">
+        <div class="column column--1of3">
+          <div class="card text-center">
+            <div class="card__body dev">
+              <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-edit"></i> Edit</a>
+            <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-edit"></i> Delete</a>
+            {% if current_user.profile.image %}
+              <img class="avatar avatar--xl dev__avatar" src="{{current_user.profile.image.url}}" />
+            {% else %}
+              <img class="avatar avatar--xl dev__avatar" src="{% static 'static_profile_model/default.jpg' %}" />
+            {% endif %}
+              <h2 class="dev__name">{{current_user.profile.name}}</h2>
+              <p class="dev__title">{{current_user.profile.short_intro}}</p>
+              <p class="dev__location">Based in {{current_user.profile.location}}</p>
+              <ul class="dev__social">
+                 {% if current_user.profile.github_url %}
+                  <li>
+                    <a title="Github" href="{{current_user.profile.github_url}}" target="_blank"><i class="im im-github"></i>Github</a>
+                  </li>
+                 {% endif %}
+                 {% if current_user.profile.linkedin_url %}
+                  <li>
+                    <a title="LinkedIn" href="{{current_user.profile.linkedin_url}}" target="_blank"><i class="im im-linkedin"></i>LinkedIn</a>
+                  </li>
+                 {% endif %}
+                 {% if current_user.profile.web_url %}
+                  <li>
+                    <a title="Personal Website" href="{{current_user.profile.web_url}}" target="_blank"><i class="im im-globe">Web</i></a>
+                  </li>
+                 {% endif %}
+              </ul>
+              <!-- <a href="#" class="btn btn--sub btn--lg">Send Message </a> -->
+            </div>
+          </div>
+        </div>
+        <div class="column column--2of3">
+          <div class="devInfo">
+            <h3 class="devInfo__title">About Me</h3>
+            <p class="devInfo__about">
+              {{current_user.profile.bio}}
+            </p>
+          </div>
+          <div class="settings">
+            <h3 class="settings__title">Skills</h3>
+            <a class="tag tag--pill tag--sub settings__btn tag--lg" href="#"><i class="im im-plus"></i> Add Skill</a>
+          </div>
+
+          <table class="settings__table">
+            {% for skill in top_skills %}
+                <tr>
+                <td class="settings__tableInfo">
+                    <h4>{{skill.name}}</h4>
+                    <p>
+                    {{skill.description}}
+                    </p>
+                </td>
+                <td class="settings__tableActions">
+                    <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-edit"></i> Edit</a>
+                    <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-x-mark-circle-o"></i>
+                    Delete</a>
+                </td>
+                </tr>
+            {% endfor %}
+
+            {% for skill in other_skills %}
+                <tr>
+                <td class="settings__tableInfo">
+                    <h4>{{skill.name}}</h4>
+                </td>
+                <td class="settings__tableActions">
+                    <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-edit"></i> Edit</a>
+                    <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-x-mark-circle-o"></i>
+                    Delete</a>
+                </td>
+                </tr>
+            {% endfor %}
+
+          </table>
+
+          <div class="settings">
+            <h3 class="settings__title">Projects</h3>
+            <a class="tag tag--pill tag--sub settings__btn tag--lg" href="#"><i class="im im-plus"></i> Add Project</a>
+          </div>
+
+          <table class="settings__table">
+            {% for project in projects %}
+                <tr>
+                <td class="settings__thumbnail">
+                    {% if project.image %}
+                        <a href="{% url 'project' project.id %}"><img src="{{project.image.url}}" alt="Project Thumbnail" /></a>
+                    {% else %}
+                        <a href="{% url 'project' project.id %}"><img src="{% static 'static_project_model/default.jpg' %}" alt="Project Thumbnail" /></a>
+                    {% endif %}
+                </td>
+                <td class="settings__tableInfo">
+                    <a href="single-project.html">{{project.title}}</a>
+                    <p>
+                    {{project.description}}
+                    </p>
+                </td>
+                <td class="settings__tableActions">
+                    <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-edit"></i> Edit</a>
+                    <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-x-mark-circle-o"></i>
+                    Delete</a>
+                </td>
+                </tr>
+            {% endfor %}
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+
+{% endblock content %}
