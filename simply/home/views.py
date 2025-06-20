@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from . models import Project, Review, Tag, Profile, Skill
-from . forms import ProjectForm
+from . forms import (
+    ProjectForm, UserRegistrationForm
+    )
 from django.contrib import messages
 from django.contrib.auth.models import User,auth
 from django.contrib.auth.decorators import login_required
@@ -18,7 +20,19 @@ def home(request):
 
 
 def register(request):
-    return render(request, 'home/register.html')
+    form = UserRegistrationForm()
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save(commit=False)
+            new_user.username = new_user.username.lower()
+            new_user.save()
+
+            auth.login(request, new_user)
+            messages.success(request, "Account Created Successfully!")
+            return redirect('home')
+    context = {'form':form}
+    return render(request, 'home/register.html', context)
 
 
 

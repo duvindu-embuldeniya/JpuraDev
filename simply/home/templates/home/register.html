@@ -4,6 +4,14 @@
 {% block content %}
 
 
+    <form action="" method="POST">
+        {% csrf_token %}
+
+            {{form.as_p}}
+
+        <button type="submit">Register</button>
+        <a href="{% url 'login' %}">Already Have An Account</a>
+    </form>
 
 
 {% endblock content %}
