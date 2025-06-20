@@ -12,8 +12,8 @@
         <div class="column column--1of3">
           <div class="card text-center">
             <div class="card__body dev">
-              <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-edit"></i> Edit</a>
-            <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-edit"></i> Delete</a>
+              <a class="tag tag--pill tag--main settings__btn" href="{% url 'my-account-update' current_user.username %}"><i class="im im-edit"></i> Edit</a>
+            <a class="tag tag--pill tag--main settings__btn" href="{% url 'my-account-delete' current_user.username %}"><i class="im im-edit"></i> Delete</a>
             {% if current_user.profile.image %}
               <img class="avatar avatar--xl dev__avatar" src="{{current_user.profile.image.url}}" />
             {% else %}
@@ -105,7 +105,7 @@
                 <td class="settings__tableInfo">
                     <a href="single-project.html">{{project.title}}</a>
                     <p>
-                    {{project.description}}
+                    {{project.description|slice:'150'}}
                     </p>
                 </td>
                 <td class="settings__tableActions">

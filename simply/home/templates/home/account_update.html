@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <!-- Main Section -->
+    <main class="formPage my-xl">
+        <div class="content-box">
+            <div class="formWrapper">
+                <a class="backButton" href="{% url 'my-account' current_user.username %}"><i class="im im-angle-left"></i>&#8592;</a>
+                <br>
+
+                <form class="form" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {% for field in u_form %}
+                    <!-- Input:Text -->
+                        <div class="form__field">
+                            <label for="formInput#text">{{field.label}}</label>
+                            {{field}}
+
+                            <small>
+                                {% for error in field.errors %}
+                                    <p style="color: red;">{{error}}</p>
+                                {% endfor %}
+                            </small>
+                        </div>
+                    {% endfor %}
+
+                    {% for field in p_form %}
+                    <!-- Input:Text -->
+                        <div class="form__field">
+                            <label for="formInput#text">{{field.label}}</label>
+                            {{field}}
+                        </div>
+                    {% endfor %}
+
+
+                    <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
+                </form>
+            </div>
+        </div>
+    </main>
+
+{% endblock content %}

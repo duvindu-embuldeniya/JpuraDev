@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from . models import Project, Review, Tag, Profile, Skill
 from . forms import (
-    ProjectForm, UserRegistrationForm
+    ProjectForm, UserRegistrationForm, UserUpdateForm, ProfileUpdateForm
     )
 from django.contrib import messages
 from django.contrib.auth.models import User,auth
@@ -148,6 +148,8 @@ def profile(request,username):
 @login_required
 def my_account(request,username):
     current_user = User.objects.get(username = username)
+    if request.user != current_user:
+        return HttpResponse('<h1>043 Forbidden!')
     projects = current_user.project_set.all()
     top_skills = current_user.skill_set.exclude(description__exact = '')
     other_skills = current_user.skill_set.filter(description__exact = '')
@@ -159,14 +161,38 @@ def my_account(request,username):
 
 @login_required
 def my_account_update(request,username):
-    pass
+    current_user = User.objects.get(username = username)
+    if request.user != current_user:
+        return HttpResponse('<h1>043 Forbidden!')
+    u_form = UserUpdateForm(instance=current_user)
+    p_form = ProfileUpdateForm(instance=current_user.profile)
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, instance = current_user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=current_user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            alt_user = u_form.save(commit=False)
+            alt_user.username = alt_user.username.lower()
+            alt_user.save()
+            p_form.save()
+            messages.success(request, "Account Updated Successfully!")
+            return redirect('my-account', username = alt_user.username)
+    context = {'current_user':current_user, 'u_form':u_form, 'p_form':p_form}
+    return render(request, 'home/account_update.html', context)
 
 
 
 
 @login_required
-def my_account_delete(request,pk):
-    pass
+def my_account_delete(request,username):
+    current_user = User.objects.get(username = username)
+    if request.user != current_user:
+        return HttpResponse('<h1>043 Forbidden!')
+    if request.method == 'POST':
+        current_user.delete()
+        messages.success(request, "Account Deleted Successfully!")
+        return redirect('home')
+    context = {'current_user':current_user}
+    return render(request, 'home/account_delete.html', context)
 
 
 

@@ -18,5 +18,8 @@ urlpatterns = [
     path('profile/<str:username>/', profile, name = 'profile'),
 
     #my-account
-    path('account/<str:username>/', my_account, name = 'my-account')
+    path('account/<str:username>/', my_account, name = 'my-account'),
+    path('profile/<str:username>/update/', my_account_update, name = 'my-account-update'),
+    path('profile/<str:username>/delete/', my_account_delete, name = 'my-account-delete'),
+
 ]
