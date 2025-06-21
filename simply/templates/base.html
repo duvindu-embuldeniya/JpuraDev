@@ -28,10 +28,11 @@
     {% include 'navbar.html' %}
 
 
-
     {% block content %}
     {% endblock content %}
     
+    {% include 'paginator.html' with queryset=objects %}
+
     <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>

@@ -13,11 +13,11 @@
         </div>
 
         <div class="hero-section__search">
-          <form class="form" action="#" method="get">
+          <form class="form" method="get" id="form">
             <div class="form__field">
               <label for="formInput#search">Search Developers </label>
-              <input class="input input--text" id="formInput#search" type="text" name="text"
-                placeholder="Search by developer name" />
+              <input class="input input--text" id="formInput#search" type="text"
+                placeholder="Search by developer name" value="{{query}}" name="query" />
             </div>
 
             <input class="btn btn--sub btn--lg" type="submit" value="Search" />
@@ -30,27 +30,27 @@
       <div class="container">
         <div class="grid grid--three">
 
-          {% for user in users %}
+          {% for object in objects %}
             <div class="column card">
               <div class="dev">
-                <a href="{% url 'profile' user.username %}" class="card__body">
+                <a href="{% url 'profile' object.username %}" class="card__body">
                   <div class="dev__profile">
-                    {% if user.profile.image %}
-                      <img class="avatar avatar--md" src="{{user.profile.image.url}}" alt="image" />
+                    {% if object.profile.image %}
+                      <img class="avatar avatar--md" src="{{object.profile.image.url}}" alt="image" />
                     {% else %}
                       <img class="avatar avatar--md" src="{% static 'static_profile_model/default.jpg' %}" alt="image" />
                     {% endif %}
                     <div class="dev__meta">
-                      <h3>{{user.profile.name}}</h3>
-                      <h5>{{user.profile.short_intro|slice:'60'}}</h5>
+                      <h3>{{object.profile.name}}</h3>
+                      <h5>{{object.profile.short_intro|slice:'60'}}</h5>
                     </div>
                   </div>
                   <p class="dev__info">
-                    {{user.profile.bio|slice:'150'}}
+                    {{object.profile.bio|slice:'150'}}
                   </p>
 
                   <div class="dev__skills">
-                    {% for skill in user.skill_set.all|slice:'6' %}
+                    {% for skill in object.skill_set.all|slice:'6' %}
                       <span class="tag tag--pill tag--main">
                         <small>{{skill.name}}</small>
                       </span>
@@ -67,8 +67,9 @@
       </div>
     </section>
 
-
   </main>
 
 
 {% endblock content %}
+
+

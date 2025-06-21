@@ -8,13 +8,30 @@ from . forms import (
 from django.contrib import messages
 from django.contrib.auth.models import User,auth
 from django.contrib.auth.decorators import login_required
-
+from . utils import search_profiles, search_projects
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 
 def home(request):
-    users = User.objects.all()
-    context = {'users':users}
+    # objects = User.objects.all()
+    
+    query,objects = search_profiles(request)
+    result = 1
+
+    paginator = Paginator(objects,result)
+    page = request.GET.get('page') if request.GET.get('page') else ''
+
+    try:
+        objects = paginator.page(page)
+    except PageNotAnInteger:
+        page = '1'
+        objects = paginator.page(page)
+    except EmptyPage:
+        page = paginator.num_pages
+        objects = paginator.page(page)
+
+    context = {'objects':objects, 'query':query}
     return render(request, 'home/index.html', context)
 
 
@@ -70,8 +87,24 @@ def logout(request):
 
 
 def projects(request):
-    projects = Project.objects.all()
-    context = {'projects':projects}
+    # projects = Project.objects.all()
+
+    query, objects = search_projects(request)
+    result = 1
+
+    paginator = Paginator(objects, result)
+    page = request.GET.get('page') if request.GET.get('page') else ''
+
+    try:
+        objects = paginator.page(page)
+    except PageNotAnInteger:
+        page = '1'
+        objects = paginator.page(page)
+    except EmptyPage:
+        page = paginator.num_pages
+        objects = paginator.page(page)
+
+    context = {'objects':objects, 'query':query}
     return render(request, 'home/projects.html', context)
 
 

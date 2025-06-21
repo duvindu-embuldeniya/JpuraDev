@@ -12,11 +12,11 @@
         </div>
 
         <div class="hero-section__search">
-          <form class="form" action="#" method="get">
+          <form class="form" method="get" id="form">
             <div class="form__field">
               <label for="formInput#search">Search By Projects </label>
-              <input class="input input--text" id="formInput#search" type="text" name="text"
-                placeholder="Search by Project Title" />
+              <input class="input input--text" id="formInput#search" type="text"
+                placeholder="Search by Project Title" value="{{query}}" name="query" />
             </div>
 
             <input class="btn btn--sub btn--lg" type="submit" value="Search" />
@@ -29,26 +29,26 @@
       <div class="container">
         <div class="grid grid--three">
 
-          {% for project in projects %}  
+          {% for object in objects %}  
           <div class="column">
             <div class="card project">
-              <a href="{% url 'project' project.id %}" class="project">
-                {% if project.image %}
-                    <img class="project__thumbnail" src="{{project.image.url}}" alt="project thumbnail" />
+              <a href="{% url 'project' object.id %}" class="project">
+                {% if object.image %}
+                    <img class="project__thumbnail" src="{{object.image.url}}" alt="project thumbnail" />
                 {% else %}
                     <img class="project__thumbnail" src="{% static 'static_project_model/default.jpg' %}" alt="project thumbnail" />
                 {% endif %}
                 <div class="card__body">
-                  <h3 class="project__title">{{project.title}}</h3>
+                  <h3 class="project__title">{{object.title}}</h3>
 
-                  <p><a class="project__author" href="{% url 'profile' project.owner.username %}">By {{project.owner.profile.name}}</a></p>
+                  <p><a class="project__author" href="{% url 'profile' object.owner.username %}">By {{object.owner.profile.name}}</a></p>
 
                   <p class="project--rating">
-                    <span style="font-weight: bold;">{{project.vote_ratio}}%</span> Postitive
-                    Feedback ({{project.vote_total}} Vote{{project.vote_total|pluralize:'s'}})
+                    <span style="font-weight: bold;">{{object.vote_ratio}}%</span> Postitive
+                    Feedback ({{object.vote_total}} Vote{{object.vote_total|pluralize:'s'}})
                   </p>
                   <div class="project__tags">
-                    {% for tag in project.tag_set.all %}
+                    {% for tag in object.tag_set.all %}
                         <span class="tag tag--pill tag--main">
                             <a href="{% url 'project' tag.project.id %}">
                               <small>{{tag.name}}</small>

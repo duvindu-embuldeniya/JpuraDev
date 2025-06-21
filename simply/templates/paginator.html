@@ -1,0 +1,24 @@
+
+    <div class="pagination">
+        <ul class="container">
+
+            {% if queryset.has_previous %}
+                <li><a data-page="1" href="?page=1" class="btn page page-link">First</a></li>
+                <li><a data-page="{{queryset.previous_page_number}}" href="?page={{queryset.previous_page_number}}" class="btn page page-link">&#10094; Previous</a></li>
+            {% endif %}
+
+            {% for num in queryset.paginator.page_range %}
+                {% if num == queryset.number %}
+                    <li><a data-page="{{num}}" href="?page={{num}}" class="btn page page-link btn--sub">{{num}}</a></li>
+                {% elif num > queryset.number|add:'-2' and num < queryset.number|add:'2' %}
+                    <li><a data-page="{{num}}" href="?page={{num}}" class="btn page page-link">{{num}}</a></li>
+                {% endif %}      
+            {% endfor %}
+
+            {% if queryset.has_next %}
+                <li><a data-page="{{queryset.next_page_number}}" href="?page={{queryset.next_page_number}}" class="btn page page-link">Next &#10095;</a></li>
+                <li><a data-page="{{queryset.paginator.num_pages}}" href="?page={{queryset.paginator.num_pages}}" class="btn page page-link">Last</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
