@@ -50,7 +50,9 @@
                   <div class="project__tags">
                     {% for tag in project.tag_set.all %}
                         <span class="tag tag--pill tag--main">
-                            <small>{{tag.name}}</small>
+                            <a href="{% url 'project' tag.project.id %}">
+                              <small>{{tag.name}}</small>
+                            </a>
                         </span>
                     {% endfor %}
                   </div>

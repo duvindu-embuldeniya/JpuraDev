@@ -52,7 +52,7 @@
           </div>
           <div class="settings">
             <h3 class="settings__title">Skills</h3>
-            <a class="tag tag--pill tag--sub settings__btn tag--lg" href="#"><i class="im im-plus"></i> Add Skill</a>
+            <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% url 'skill-create' %}"><i class="im im-plus"></i> Add Skill</a>
           </div>
 
           <table class="settings__table">
@@ -65,8 +65,8 @@
                     </p>
                 </td>
                 <td class="settings__tableActions">
-                    <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-edit"></i> Edit</a>
-                    <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-x-mark-circle-o"></i>
+                    <a class="tag tag--pill tag--main settings__btn" href="{% url 'skill-update' skill.pk %}"><i class="im im-edit"></i> Edit</a>
+                    <a class="tag tag--pill tag--main settings__btn" href="{% url 'skill-delete' skill.pk %}"><i class="im im-x-mark-circle-o"></i>
                     Delete</a>
                 </td>
                 </tr>
@@ -78,8 +78,8 @@
                     <h4>{{skill.name}}</h4>
                 </td>
                 <td class="settings__tableActions">
-                    <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-edit"></i> Edit</a>
-                    <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-x-mark-circle-o"></i>
+                    <a class="tag tag--pill tag--main settings__btn" href="{% url 'skill-update' skill.pk %}"><i class="im im-edit"></i> Edit</a>
+                    <a class="tag tag--pill tag--main settings__btn" href="{% url 'skill-delete' skill.pk %}"><i class="im im-x-mark-circle-o"></i>
                     Delete</a>
                 </td>
                 </tr>
@@ -89,7 +89,7 @@
 
           <div class="settings">
             <h3 class="settings__title">Projects</h3>
-            <a class="tag tag--pill tag--sub settings__btn tag--lg" href="#"><i class="im im-plus"></i> Add Project</a>
+            <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% url 'project-create' %}"><i class="im im-plus"></i> Add Project</a>
           </div>
 
           <table class="settings__table">
@@ -103,15 +103,22 @@
                     {% endif %}
                 </td>
                 <td class="settings__tableInfo">
-                    <a href="single-project.html">{{project.title}}</a>
+                    <a href="{% url 'project' project.id %}">{{project.title}}</a>
                     <p>
                     {{project.description|slice:'150'}}
                     </p>
+                    <br>
+
+                    {% for tag in project.tag_set.all %}
+                      <a style="padding-left: 10px; margin-bottom: 10px; margin-right: 8px;" class="tag--main " href="{% url 'tag-option' tag.id %}"><i class="im im-edit"></i><small>{{tag.name}}</small></a>
+                    {% endfor %}
+
                 </td>
                 <td class="settings__tableActions">
-                    <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-edit"></i> Edit</a>
-                    <a class="tag tag--pill tag--main settings__btn" href="#"><i class="im im-x-mark-circle-o"></i>
+                    <a class="tag tag--pill tag--main settings__btn" href="{% url 'project-update' project.pk %}"><i class="im im-edit"></i> Edit</a>
+                    <a class="tag tag--pill tag--main settings__btn" href="{% url 'project-delete' project.pk %}"><i class="im im-x-mark-circle-o"></i>
                     Delete</a>
+                    <a class="tag tag--pill tag--main settings__btn" href="{% url 'tag-create' project.id %}"><i class="im im-edit"></i>+Tags</a>
                 </td>
                 </tr>
             {% endfor %}

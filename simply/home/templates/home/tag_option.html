@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Main Section -->
+    <main class="formPage my-xl">
+        <div class="content-box">
+            <div class="formWrapper">
+                <a class="backButton" href="{% url 'my-account' current_user.username %}"><i class="im im-angle-left"></i>&#8592;</a>
+                <br>
+
+                <form class="form" method="POST">
+                    <p>Select an Option</p>
+                    <a class="btn btn--sub btn--lg  my-md" href="{% url 'tag-update' tag.pk %}">Update</a>
+                    <a class="btn btn--sub btn--lg  my-md" href="{% url 'tag-delete' tag.pk %}">Delete</a>
+                </form>
+            </div>
+        </div>
+    </main>
+
+{% endblock content %}

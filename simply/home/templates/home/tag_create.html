@@ -9,19 +9,19 @@
                 <a class="backButton" href="{% url 'my-account' current_user.username %}"><i class="im im-angle-left"></i>&#8592;</a>
                 <br>
 
-                <form class="form" method="POST" enctype="multipart/form-data">
+                <form class="form" method="POST">
                     {% csrf_token %}
 
-                    <!-- Input:Text -->
                     {% for field in form %}
-                        <div class="form__field">
-                            <label for="formInput#text">{{field.label}}</label>
-                          
-                            {{field}}
-                        </div>
+                    <!-- Input:Text -->
+                    <div class="form__field">
+                        <label for="formInput#text">{{field.label}}</label>
+                        {{field}}
+                    </div>
                     {% endfor %}
 
-                    <input class="btn btn--sub btn--lg  my-md" type="submit" value="Update" />
+
+                    <input class="btn btn--sub btn--lg  my-md" type="submit" value="Create" />
                 </form>
             </div>
         </div>

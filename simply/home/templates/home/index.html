@@ -48,14 +48,15 @@
                   <p class="dev__info">
                     {{user.profile.bio|slice:'150'}}
                   </p>
+
                   <div class="dev__skills">
                     {% for skill in user.skill_set.all|slice:'6' %}
                       <span class="tag tag--pill tag--main">
                         <small>{{skill.name}}</small>
                       </span>
                     {% endfor %}
-
                   </div>
+                  
                 </a>
               </div>
             </div>

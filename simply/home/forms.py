@@ -1,4 +1,4 @@
-from . models import Project, Review, Profile
+from . models import Project, Profile, Skill, Tag
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -47,6 +47,7 @@ class UserRegistrationForm(UserCreationForm):
 
 
 
+
 class UserUpdateForm(forms.ModelForm):
 
     email = forms.EmailField(required=True)
@@ -72,6 +73,7 @@ class UserUpdateForm(forms.ModelForm):
 
 
 
+
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
@@ -80,6 +82,36 @@ class ProfileUpdateForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(ProfileUpdateForm, self).__init__(*args, **kwargs)
+
+        for name,field in self.fields.items():
+            field.widget.attrs.update({'class':'input'})
+
+
+
+
+
+class SkillForm(forms.ModelForm):
+    class Meta:
+        model = Skill
+        fields = ['name', 'description']
+    
+    def __init__(self, *args, **kwargs):
+        super(SkillForm, self).__init__(*args, **kwargs)
+
+        for name,field in self.fields.items():
+            field.widget.attrs.update({'class':'input'})
+
+
+
+
+
+class TagForm(forms.ModelForm):
+    class Meta:
+        model = Tag
+        fields = ['name']
+    
+    def __init__(self, *args, **kwargs):
+        super(TagForm, self).__init__(*args, **kwargs)
 
         for name,field in self.fields.items():
             field.widget.attrs.update({'class':'input'})

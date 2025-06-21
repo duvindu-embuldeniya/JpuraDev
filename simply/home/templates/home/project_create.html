@@ -6,7 +6,7 @@
     <main class="formPage my-xl">
         <div class="content-box">
             <div class="formWrapper">
-                <a class="backButton" href="{{request.META.HTTP_REFERER}}"><i class="im im-angle-left"></i>&#8592;</a>
+                <a class="backButton" href="{% url 'my-account' current_user.username %}"><i class="im im-angle-left"></i>&#8592;</a>
                 <br>
 
                 <form class="form" method="POST" enctype="multipart/form-data">
