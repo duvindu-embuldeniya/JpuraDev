@@ -46,7 +46,7 @@
           <div class="devInfo">
             <h3 class="devInfo__title">About Me</h3>
             <p class="devInfo__about">
-                {{current_user.profile.bio|slice:'150'}}
+                {{current_user.profile.bio}}
             </p>
           </div>
           <div class="devInfo">
@@ -57,7 +57,7 @@
               <div class="devSkill">
                 <h4 class="devSkill__title">{{skill.name}}</h4>
                 <p class="devSkill__info">
-                  {{skill.description|slice:'150'}}
+                  {{skill.description}}
                 </p>
               </div>
             {% endfor %}

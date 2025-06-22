@@ -34,7 +34,7 @@
           <h2 class="singleProject__title">{{project.title}}</h2>
           <h3 class="singleProject__subtitle">About the Project</h3>
           <div class="singleProject__info">
-            {{project.description|slice:'150'}}
+            {{project.description}}
           </div>
 
           <div class="comments">
@@ -84,7 +84,7 @@
                   <div class="comment__details">
                     <a href="{% url 'profile' review.owner.username %}" class="comment__author">{{review.owner.profile.name}}</a>
                     <p class="comment__info">
-                      {{review.body|slice:":200"|linebreaksbr}}
+                      {{review.body|linebreaksbr}}
                     </p>
                   </div>
                 </div>

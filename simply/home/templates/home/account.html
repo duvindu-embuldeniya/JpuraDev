@@ -61,7 +61,7 @@
                 <td class="settings__tableInfo">
                     <h4>{{skill.name}}</h4>
                     <p>
-                    {{skill.description|slice:'150'}}
+                    {{skill.description}}
                     </p>
                 </td>
                 <td class="settings__tableActions">
@@ -105,7 +105,7 @@
                 <td class="settings__tableInfo">
                     <a href="{% url 'project' project.id %}">{{project.title}}</a>
                     <p>
-                    {{project.description|slice:'150'}}
+                    {{project.description}}
                     </p>
                     <br>
 

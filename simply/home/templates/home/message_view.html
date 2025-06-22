@@ -14,7 +14,7 @@
           <a href="{% url 'profile' msg.sender.username %}" class="message__author">{{msg.name}}</a>
           <p class="message__date">{{msg.created|timesince}} ago</p>
           <div class="message__body">
-           {{msg.body|slice:'150'|linebreaksbr}}
+           {{msg.body|linebreaksbr}}
           </div>
 
         <div>
