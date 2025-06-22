@@ -1,4 +1,4 @@
-from . models import Project, Profile, Skill, Tag
+from . models import Project, Profile, Skill, Tag, Review
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -112,6 +112,23 @@ class TagForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(TagForm, self).__init__(*args, **kwargs)
+
+        for name,field in self.fields.items():
+            field.widget.attrs.update({'class':'input'})
+
+
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['value', 'body']
+
+    def __init__(self, *args, **kwargs):
+        super(ReviewForm, self).__init__(*args, **kwargs)
+
+
+        self.fields['body'].widget.attrs.update({'placeholder': 'Voting Allowed Just Once Per Project!'})
 
         for name,field in self.fields.items():
             field.widget.attrs.update({'class':'input'})

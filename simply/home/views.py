@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from . models import Project, Review, Tag, Profile, Skill
 from . forms import (
     ProjectForm, UserRegistrationForm, UserUpdateForm, ProfileUpdateForm,
-    SkillForm, TagForm
+    SkillForm, TagForm, ReviewForm
     )
 from django.contrib import messages
 from django.contrib.auth.models import User,auth
@@ -112,7 +112,21 @@ def projects(request):
 
 def project(request, id):
     project = Project.objects.get(id = id)
-    context = {'project':project}
+    form = ReviewForm()
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            new_vote = form.save(commit=False)
+            new_vote.owner = request.user
+            new_vote.project = project
+            new_vote.save()
+            messages.success(request, "Vote Added Successfully!")
+        
+            project.update_values
+
+            return redirect('project', id = project.pk)
+        
+    context = {'project':project, 'form':form}
     return render(request, 'home/project_info.html', context)
 
 

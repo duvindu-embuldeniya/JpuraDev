@@ -39,6 +39,22 @@ class Project(models.Model):
         return f"{self.title}"
     
 
+    @property
+    def update_values(self):
+        all_reviews = self.review_set.all()
+        all_reviews_count = all_reviews.count()
+        up_reviews = all_reviews.filter(value = 'up')
+        up_reviews_count = up_reviews.count()
+
+        percentage = (up_reviews_count/all_reviews_count) * 100
+        self.vote_total = up_reviews_count
+        self.vote_ratio = percentage
+        self.save()
+    
+    @property
+    def get_voters(self):
+        queryset = self.review_set.all().values_list('owner__id', flat = True)
+        return queryset
 
 
 class Review(models.Model):
