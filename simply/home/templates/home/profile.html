@@ -17,7 +17,7 @@
               <img class="avatar avatar--xl" src="{% static 'static_profile_model/default.jpg' %}" />
             {% endif %}
               <h2 class="dev__name">{{current_user.profile.name}}</h2>
-              <p class="dev__title">{{current_user.profile.short_intro|slice:'60'}}</p>
+              <p class="dev__title">{{current_user.profile.short_intro}}</p>
               <p class="dev__location">Based in {{current_user.profile.location}}</p>
               <ul class="dev__social">
                 {% if current_user.profile.github_url %}
@@ -57,7 +57,7 @@
               <div class="devSkill">
                 <h4 class="devSkill__title">{{skill.name}}</h4>
                 <p class="devSkill__info">
-                  {{skill.description}}
+                  {{skill.description|slice:'150'}}
                 </p>
               </div>
             {% endfor %}
@@ -87,9 +87,15 @@
                 <div class="card project">
                   <a href="{% url 'project' project.id %}" class="project">
                     {% if project.image %}
-                        <img class="project__thumbnail" src="{{project.image.url}}" alt="project thumbnail" />
+                        <div style="width: 100%; height: 200px; overflow: hidden; position: relative;">
+                        <img style="width: 100%; height: auto; object-fit: contain; "
+                        class="project__thumbnail" src="{{project.image.url}}" alt="project thumbnail" />
+                        </div>
                     {% else %}
-                        <img class="project__thumbnail" src="{% static 'static_project_model/default.jpg' %}" alt="project thumbnail" />
+                        <div style="width: 100%; height: 200px; overflow: hidden; position: relative;">
+                        <img style="width: 100%; height: auto; object-fit: contain; "
+                        class="project__thumbnail" src="{% static 'static_project_model/default.jpg' %}" alt="project thumbnail" />
+                        </div>
                     {% endif %}
                     <div class="card__body">
                       <h3 class="project__title">{{project.title}}</h3>

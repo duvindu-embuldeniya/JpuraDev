@@ -29,38 +29,48 @@
       <div class="container">
         <div class="grid grid--three">
 
-          {% for object in objects %}  
-          <div class="column">
-            <div class="card project">
-              <a href="{% url 'project' object.id %}" class="project">
-                {% if object.image %}
-                    <img class="project__thumbnail" src="{{object.image.url}}" alt="project thumbnail" />
-                {% else %}
-                    <img class="project__thumbnail" src="{% static 'static_project_model/default.jpg' %}" alt="project thumbnail" />
-                {% endif %}
-                <div class="card__body">
-                  <h3 class="project__title">{{object.title}}</h3>
 
-                  <p><a class="project__author" href="{% url 'profile' object.owner.username %}">By {{object.owner.profile.name}}</a></p>
+          {% for object in objects %}
+            <div class="column">
+              <div class="card project">
+                <a href="{% url 'project' object.id %}" class="project">
+                  {% if object.image %}
+                    <div style="width: 100%; height: 200px; overflow: hidden; position: relative;">
+                      <img style="width: 100%; height: auto; object-fit: contain;"
+                          class="project__thumbnail"
+                          src="{{object.image.url}}"
+                          alt="project thumbnail" />
+                    </div>
+                  {% else %}
+                    <div style="width: 100%; height: 200px; overflow: hidden; position: relative;">
+                      <img style="width: 100%; height: auto; object-fit: contain;"
+                          class="project__thumbnail"
+                          src="{% static 'static_project_model/default.jpg' %}"
+                          alt="project thumbnail" />
+                    </div>
+                  {% endif %}
 
-                  <p class="project--rating">
-                    <span style="font-weight: bold;">{{object.vote_ratio}}%</span> Postitive
-                    Feedback ({{object.vote_total}} Vote{{object.vote_total|pluralize:'s'}})
-                  </p>
-                  <div class="project__tags">
-                    {% for tag in object.tag_set.all %}
+                  <div class="card__body">
+                    <h3 class="project__title">{{ object.title }}</h3>
+                    <p><a class="project__author" href="{% url 'profile' object.owner.username %}">By {{ object.owner.username }}</a></p>
+                    <p class="project--rating">
+                      <span style="font-weight: bold;">{{ object.vote_ratio }}%</span> Positive
+                      Feedback ({{ object.vote_total }} Vote{{ object.vote_total|pluralize:"s" }})
+                    </p>
+                    <div class="project__tags">
+                      {% for tag in object.tag_set.all|slice:'6' %}
                         <span class="tag tag--pill tag--main">
-                            <a href="{% url 'project' tag.project.id %}">
-                              <small>{{tag.name}}</small>
-                            </a>
+                          <small>{{ tag }}</small>
                         </span>
-                    {% endfor %}
+                      {% endfor %}
+                    </div>
                   </div>
-                </div>
-              </a>
+                </a>
+              </div>
             </div>
-          </div>
           {% endfor %}
+
+
 
         </div>
       </div>

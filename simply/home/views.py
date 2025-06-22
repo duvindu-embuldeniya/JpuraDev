@@ -47,8 +47,8 @@ def register(request):
             # new_user.save()
             new_user = form.save()
             auth.login(request, new_user)
-            messages.success(request, "Account Created Successfully!")
-            return redirect('home')
+            messages.info(request, "Account Created Successfully!")
+            return redirect('my-account-update', username = new_user.username)
     context = {'form':form}
     return render(request, 'home/register.html', context)
 
@@ -57,7 +57,7 @@ def register(request):
 
 def login(request):
     if request.user.is_authenticated:
-        messages.info(request, "You've Already Loged-In!")
+        # messages.info(request, "You've Already Loged-In!")
         return redirect('home')
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -65,7 +65,7 @@ def login(request):
         auth_user = auth.authenticate(username = username, password = password)
         if auth_user is not None:
             auth.login(request, auth_user)
-            messages.success(request, "Successfully Loged-In!")
+            # messages.success(request, "Successfully Loged-In!")
             return redirect(request.GET.get('next') if request.GET.get('next') else 'home')
         else:
             messages.error(request, "User Doesn't Exist!")
@@ -77,10 +77,10 @@ def login(request):
 
 def logout(request):
     if not(request.user.is_authenticated):
-        messages.info(request, "You've Not Logd-In!")
+        # messages.info(request, "You've Not Logd-In!")
         return redirect('home')
     auth.logout(request)
-    messages.success(request, "Successfully Loged-Out!")
+    # messages.success(request, "Successfully Loged-Out!")
     return redirect('home')
 
 
@@ -120,7 +120,7 @@ def project(request, id):
             new_vote.owner = request.user
             new_vote.project = project
             new_vote.save()
-            messages.success(request, "Vote Added Successfully!")
+            messages.info(request, "Vote Added Successfully!")
         
             project.update_values
 
@@ -142,7 +142,7 @@ def project_create(request):
             new_project = form.save(commit=False)
             new_project.owner = request.user
             new_project.save()
-            messages.success(request, "Project Created Successfully!")
+            messages.info(request, "Project Created Successfully!")
             return redirect('my-account', username = current_user.username)
     context = {'form':form, 'current_user':current_user}
     return render(request, 'home/project_create.html', context)
@@ -161,7 +161,7 @@ def project_update(request,id):
         form = ProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid():
             alt_project = form.save()
-            messages.success(request, "Project Updated Successfully!")
+            messages.info(request, "Project Updated Successfully!")
             return redirect('my-account', username = current_user.username)
     context = {'form':form, 'current_user':current_user}
     return render(request, 'home/project_update.html', context)
@@ -177,7 +177,7 @@ def project_delete(request,id):
         return HttpResponse('<h1>403 Forbidden!</h1>')
     if request.method == 'POST':
         project.delete()
-        messages.success(request, 'Project Deleted Successfully')
+        messages.info(request, 'Project Deleted Successfully')
         return redirect('my-account', username = current_user.username)
     context = {'project':project, 'current_user':current_user}
     return render(request, 'home/project_delete.html', context)
@@ -228,7 +228,7 @@ def my_account_update(request,username):
             # alt_user.save()
             alt_user = u_form.save()
             p_form.save()
-            messages.success(request, "Account Updated Successfully!")
+            messages.info(request, "Account Updated Successfully!")
             return redirect('my-account', username = alt_user.username)
     context = {'current_user':current_user, 'u_form':u_form, 'p_form':p_form}
     return render(request, 'home/account_update.html', context)
@@ -243,7 +243,7 @@ def my_account_delete(request,username):
         return HttpResponse('<h1>043 Forbidden!</h1>')
     if request.method == 'POST':
         current_user.delete()
-        messages.success(request, "Account Deleted Successfully!")
+        messages.info(request, "Account Deleted Successfully!")
         return redirect('home')
     context = {'current_user':current_user}
     return render(request, 'home/account_delete.html', context)
@@ -261,7 +261,7 @@ def skill_create(request):
             new_skill = form.save(commit=False)
             new_skill.owner = request.user
             new_skill.save()
-            messages.success(request, "Skill Created Successfully!")
+            messages.info(request, "Skill Created Successfully!")
             return redirect('my-account', username = current_user.username)
     context = {'current_user':current_user, 'form':form}
     return render(request, 'home/skill_create.html', context)
@@ -280,7 +280,7 @@ def skill_update(request,id):
         form = SkillForm(request.POST, instance = skill)
         if form.is_valid():
             alt_skill = form.save()
-            messages.success(request, "Skill Updated Successfully!")
+            messages.info(request, "Skill Updated Successfully!")
             return redirect('my-account', username = current_user.username)
     context = {'current_user':current_user, 'skill':skill, 'form':form}
     return render(request, 'home/skill_update.html', context)
@@ -296,7 +296,7 @@ def skill_delete(request, id):
         return HttpResponse('<h1>403 Forbidden!</h1>')
     if request.method == 'POST':
         skill.delete()
-        messages.success(request, "Skill Deleted Successfully!")
+        messages.info(request, "Skill Deleted Successfully!")
         return redirect('my-account', username = current_user.username)
     context = {'current_user':current_user, 'skill':skill}
     return render(request, 'home/skill_delete.html', context)
@@ -315,7 +315,7 @@ def tag_create(request, id):
             new_tag = form.save(commit=False)
             new_tag.project = project
             new_tag.save()
-            messages.success(request, "Tag Created Successfully!")
+            messages.info(request, "Tag Created Successfully!")
             return redirect('my-account', username = current_user.username)
     context = {'current_user':current_user, 'form':form}
     return render(request, 'home/tag_create.html', context)
@@ -346,7 +346,7 @@ def tag_update(request, id):
         form = TagForm(request.POST, instance = tag)
         if form.is_valid():
             form.save()
-            messages.success(request, "Tag Updated Successfully!")
+            messages.info(request, "Tag Updated Successfully!")
             return redirect('my-account', username = current_user.username)
     context = {'tag':tag, 'form':form, 'current_user':current_user}
     return render(request, 'home/tag_update.html', context)
@@ -362,7 +362,7 @@ def tag_delete(request,id):
         return HttpResponse('<h1>403 Forbidden!</h1>')
     if request.method == 'POST':
         tag.delete()
-        messages.success(request, "Tag Deleted Successfully!")
+        messages.info(request, "Tag Deleted Successfully!")
         return redirect('my-account', username = current_user.username)
     context = {'tag':tag, 'current_user':current_user}
     return render(request, 'home/tag_delete.html', context)
@@ -383,7 +383,7 @@ def message_create(request, username):
             new_msg.name = request.user.profile.name
             new_msg.email = request.user.email
             new_msg.save()
-            messages.success(request, 'Message Created Successfully!')
+            messages.info(request, 'Message Created Successfully!')
             return redirect('profile', username = profile_owner.username)
     context = {'form':form, 'profile_owner':profile_owner}
     return render(request, 'home/message_create.html', context)
@@ -433,7 +433,7 @@ def message_reply(request, id):
             new_msg.name = sender.profile.name
             new_msg.email = sender.email
             new_msg.save()
-            messages.success(request, "Replied Successfully!")
+            messages.info(request, "Replied Successfully!")
             return redirect('message-view', id = msg.id)
     context = {'form':form, 'msg':msg}
     return render(request, 'home/message_reply.html', context)

@@ -16,7 +16,7 @@
                     <li class="message message--unread">
                         <a href="{% url 'message-view' msg.id %}">
                             <span class="message__author">{{msg.name}}</span>
-                            <span class="message__subject">{{msg.body}}</span>
+                            <span class="message__subject">{{msg.body|slice:'150'}}</span>
                             <span class="message__date">{{msg.created|timesince}} ago</span>
                         </a>
                     </li>
@@ -24,7 +24,7 @@
                     <li class="message">
                         <a href="{% url 'message-view' msg.id %}">
                             <span class="message__author">{{msg.name}}</span>
-                            <span class="message__subject">{{msg.body}}</span>
+                            <span class="message__subject">{{msg.body|slice:'150'}}</span>
                             <span class="message__date">{{msg.created|timesince}} ago</span>
                         </a>
                     </li>

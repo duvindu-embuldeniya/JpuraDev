@@ -12,8 +12,9 @@ class ProjectForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(ProjectForm, self).__init__(*args, **kwargs)
-
-        # self.fields['title'].widget.attrs.update({'placeholder':'title'})
+    
+        self.fields['title'].widget.attrs.update({'placeholder': 'Max length: 60 characters!'})
+        self.fields['description'].widget.attrs.update({'placeholder': 'Only the first 150 characters will be visible!'})
 
         for name,field in self.fields.items():
             field.widget.attrs.update({'class':'input'})
@@ -83,6 +84,9 @@ class ProfileUpdateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProfileUpdateForm, self).__init__(*args, **kwargs)
 
+        self.fields['short_intro'].widget.attrs.update({'placeholder': 'Max length: 60 characters!'})
+        self.fields['bio'].widget.attrs.update({'placeholder': 'Only the first 150 characters will be visible!'})
+
         for name,field in self.fields.items():
             field.widget.attrs.update({'class':'input'})
 
@@ -97,6 +101,10 @@ class SkillForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(SkillForm, self).__init__(*args, **kwargs)
+
+        self.fields['name'].widget.attrs.update({'placeholder': 'Max length: 16 characters!'})
+        self.fields['description'].widget.attrs.update({'placeholder': 'Only the first 150 characters will be visible!'})
+
 
         for name,field in self.fields.items():
             field.widget.attrs.update({'class':'input'})
@@ -113,11 +121,13 @@ class TagForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(TagForm, self).__init__(*args, **kwargs)
 
+        self.fields['name'].widget.attrs.update({'placeholder': 'Max length: 16 characters!'})
+
         for name,field in self.fields.items():
             field.widget.attrs.update({'class':'input'})
 
 
-
+ 
 
 class ReviewForm(forms.ModelForm):
     class Meta:
@@ -128,7 +138,7 @@ class ReviewForm(forms.ModelForm):
         super(ReviewForm, self).__init__(*args, **kwargs)
 
 
-        self.fields['body'].widget.attrs.update({'placeholder': 'Voting Allowed Just Once Per Project!'})
+        self.fields['body'].widget.attrs.update({'placeholder': 'You can vote only once per project. Only the first 150 characters will be visible!'})
 
         for name,field in self.fields.items():
             field.widget.attrs.update({'class':'input'})
@@ -143,6 +153,11 @@ class MessageForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(MessageForm, self).__init__(*args, **kwargs)
+
+
+        self.fields['subject'].widget.attrs.update({'placeholder': 'Max length: 100 characters!'})
+        self.fields['body'].widget.attrs.update({'placeholder': 'Only the first 150 characters will be visible!'})
+
 
         for name,field in self.fields.items():
             field.widget.attrs.update({'class':'input'})

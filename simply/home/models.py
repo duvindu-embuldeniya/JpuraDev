@@ -5,12 +5,12 @@ from django.contrib.auth.models import User
 # tag = models.ManyToManyField(Tag, blank=True)
 
  
-
+ 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=200, null=True)
-    short_intro = models.CharField(max_length=200, null=True)
+    short_intro = models.CharField(max_length=60, null=True)
     bio = models.TextField(null=True)
     location = models.CharField(max_length=200, null=True)
     image = models.ImageField(upload_to='uploaded_profile_model/', blank=True, null=True)
@@ -27,7 +27,7 @@ class Profile(models.Model):
 
 class Project(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=60)
     description = models.TextField()
     source_link = models.CharField(max_length=200, blank=True, null=True)
     image = models.ImageField(upload_to='uploaded_project_model/', blank=True, null=True)
@@ -57,6 +57,8 @@ class Project(models.Model):
         return queryset
 
 
+
+
 class Review(models.Model):
     VOTE_TYPE = (
         ('up', 'Up Vote'),
@@ -75,7 +77,7 @@ class Review(models.Model):
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=16)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     created = models.DateField(auto_now_add=True)
 
@@ -86,7 +88,7 @@ class Tag(models.Model):
 
 class Skill(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=16)
     description = models.TextField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -100,7 +102,7 @@ class Message(models.Model):
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='receiver')
     name = models.CharField(max_length=200)
     email = models.EmailField(max_length=200)
-    subject = models.CharField(max_length=200)
+    subject = models.CharField(max_length=100)
     body = models.TextField()
     is_read = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
