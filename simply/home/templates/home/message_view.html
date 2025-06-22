@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+  <!-- Main Section -->
+  <main class="messagePage my-xl">
+    <div class="content-box">
+      <div class="message">
+        
+        <!-- <a class="backButton" href="{% url 'message-inbox' msg.receiver.username %}"><i class="im im-angle-left"></i>&#8592;</a> -->
+
+        <h2 class="message__subject">{{msg.subject}}</h4>
+          <a href="{% url 'profile' msg.sender.username %}" class="message__author">{{msg.name}}</a>
+          <p class="message__date">{{msg.created|timesince}} ago</p>
+          <div class="message__body">
+           {{msg.body|linebreaksbr}}
+          </div>
+
+        <div>
+            <a class="btn btn--sub btn--lg  my-md" href="{% url 'message-inbox' request.user.username %}">Go Back</a>
+            <a class="btn btn--sub btn--lg  my-md" href="{% url 'message-reply' msg.id %}">Reply</a>
+        </div>
+
+
+      </div>
+    </div>
+  </main>
+
+{% endblock content %}
+
+
+
+

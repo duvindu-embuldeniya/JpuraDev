@@ -30,4 +30,9 @@ urlpatterns = [
     path('tag-option/<int:id>/', tag_option, name = 'tag-option'),
     path('tag-update/<int:id>/', tag_update, name = 'tag-update'),
     path('tag-delete/<int:id>/', tag_delete, name = 'tag-delete'),
+
+    path('message-create/<str:username>/', message_create, name = 'message-create'),
+    path('message-inbox/<str:username>/', message_inbox, name = 'message-inbox'),
+    path('message-view/<int:id>/', message_view, name = 'message-view'),
+    path('message-reply/<int:id>/', message_reply, name = 'message-reply')
 ]

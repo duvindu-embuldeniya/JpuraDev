@@ -1,4 +1,4 @@
-from . models import Project, Profile, Skill, Tag, Review
+from . models import Project, Profile, Skill, Tag, Review, Message
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -129,6 +129,20 @@ class ReviewForm(forms.ModelForm):
 
 
         self.fields['body'].widget.attrs.update({'placeholder': 'Voting Allowed Just Once Per Project!'})
+
+        for name,field in self.fields.items():
+            field.widget.attrs.update({'class':'input'})
+
+
+
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['subject', 'body']
+
+    def __init__(self, *args, **kwargs):
+        super(MessageForm, self).__init__(*args, **kwargs)
 
         for name,field in self.fields.items():
             field.widget.attrs.update({'class':'input'})

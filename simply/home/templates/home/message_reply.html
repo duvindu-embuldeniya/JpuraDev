@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <!-- Main Section -->
+    <main class="formPage my-xl">
+        <div class="content-box">
+            <div class="formWrapper">
+                    <a class="backButton" href="{% url 'message-view' msg.id %}"><i class="im im-angle-left"></i>&#8592;</a>
+                    <br>
+
+                <form class="form" method="POST">
+                    {% csrf_token %}
+
+                    {% for field in form %}
+                        <!-- Input:Text -->
+                        <div class="form__field">
+                            <label for="formInput#text">{{field.label}}</label>
+                            {{field}}
+                        </div>
+                    {% endfor %}
+
+                    <input class="btn btn--sub btn--lg  my-md" type="submit" value="Reply" />
+                </form>
+            </div>
+        </div>
+    </main>
+
+
+{% endblock content %}

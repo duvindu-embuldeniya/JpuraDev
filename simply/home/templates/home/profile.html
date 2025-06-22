@@ -37,7 +37,7 @@
                 {% endif %}
               </ul>
               {% if request.user != current_user %}
-                <a href="#" class="btn btn--sub btn--lg">Send Message </a>
+                <a href="{% url 'message-create' current_user.username %}" class="btn btn--sub btn--lg">Send Message </a>
             {% endif %}
             </div>
           </div>
@@ -67,7 +67,11 @@
 
                 {% for skill in mini_skills %}
                     <span class="tag tag--pill tag--sub tag--lg">
-                    <small>{{skill.name}}</small>
+                      <small>
+                        <a href="{% url 'profile' skill.owner.username %}">
+                          {{skill.name}}
+                        </a>
+                      </small>
                     </span>
                 {% endfor %}
 

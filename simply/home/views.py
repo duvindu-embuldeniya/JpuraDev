@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from . models import Project, Review, Tag, Profile, Skill
+from . models import Project, Review, Tag, Profile, Skill, Message
 from . forms import (
     ProjectForm, UserRegistrationForm, UserUpdateForm, ProfileUpdateForm,
-    SkillForm, TagForm, ReviewForm
+    SkillForm, TagForm, ReviewForm, MessageForm
     )
 from django.contrib import messages
 from django.contrib.auth.models import User,auth
@@ -366,3 +366,74 @@ def tag_delete(request,id):
         return redirect('my-account', username = current_user.username)
     context = {'tag':tag, 'current_user':current_user}
     return render(request, 'home/tag_delete.html', context)
+
+
+
+
+@login_required
+def message_create(request, username):
+    profile_owner = User.objects.get(username = username)
+    form = MessageForm()
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            new_msg = form.save(commit=False)
+            new_msg.sender = request.user
+            new_msg.receiver = profile_owner
+            new_msg.name = request.user.profile.name
+            new_msg.email = request.user.email
+            new_msg.save()
+            messages.success(request, 'Message Created Successfully!')
+            return redirect('profile', username = profile_owner.username)
+    context = {'form':form, 'profile_owner':profile_owner}
+    return render(request, 'home/message_create.html', context)
+
+
+
+
+@login_required
+def message_inbox(request,username):
+    current_user = User.objects.get(username = username)
+    all_messages = current_user.receiver.all()
+    new_messages_count = all_messages.filter(is_read = False).count()
+    context = {'all_messages':all_messages, 'new_messages_count':new_messages_count}
+    return render(request, 'home/message_inbox.html', context)
+
+
+
+
+@login_required
+def message_view(request, id):
+    msg = Message.objects.get(id = id)
+    if request.user != msg.receiver:
+        return HttpResponse('<h1>403 Forbidden!</h1>')
+    if msg.is_read == False:
+        msg.is_read = True
+        msg.save()
+    context = {'msg':msg}
+    return render(request, 'home/message_view.html', context)
+
+
+
+
+@login_required
+def message_reply(request, id):
+    msg = Message.objects.get(id = id)
+    if request.user != msg.receiver:
+        return HttpResponse('<h1>403 Forbidden!</h1>')
+    sender = request.user
+    receiver = msg.sender
+    form = MessageForm()
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            new_msg = form.save(commit=False)
+            new_msg.sender = sender
+            new_msg.receiver = receiver
+            new_msg.name = sender.profile.name
+            new_msg.email = sender.email
+            new_msg.save()
+            messages.success(request, "Replied Successfully!")
+            return redirect('message-view', id = msg.id)
+    context = {'form':form, 'msg':msg}
+    return render(request, 'home/message_reply.html', context)
