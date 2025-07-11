@@ -85,7 +85,7 @@ class ProfileUpdateForm(forms.ModelForm):
         super(ProfileUpdateForm, self).__init__(*args, **kwargs)
 
         # self.fields['short_intro'].widget.attrs.update({'placeholder': 'Max length: 60 characters!'})
-        # self.fields['bio'].widget.attrs.update({'placeholder': 'Only the first 150 characters will be visible!'})
+        self.fields['bio'].widget.attrs.update({'placeholder': 'Only the first 150 characters will be visible in home page!'})
 
         for name,field in self.fields.items():
             field.widget.attrs.update({'class':'input'})
