@@ -39,4 +39,4 @@
 
 **Then, the development server will be started at http://127.0.0.1:8000/**
 
-## Ensure that the environment variables in settings.py are correctly configured for your setup before running the program.
+## Ensure that the environment variables in settings.py are correctly configured for your setup before running the application.
