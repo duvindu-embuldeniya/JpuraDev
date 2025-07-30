@@ -42,9 +42,9 @@ def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            # new_user = form.save(commit=False)
-            # new_user.username = new_user.username.lower()
-            # new_user.save()
+            new_user = form.save(commit=False)
+            new_user.username = new_user.username.lower()
+            new_user.save()
             new_user = form.save()
             auth.login(request, new_user)
             messages.info(request, "Account Created Successfully!")
@@ -223,9 +223,9 @@ def my_account_update(request,username):
         u_form = UserUpdateForm(request.POST, instance = current_user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=current_user.profile)
         if u_form.is_valid() and p_form.is_valid():
-            # alt_user = u_form.save(commit=False)
-            # alt_user.username = alt_user.username.lower()
-            # alt_user.save()
+            alt_user = u_form.save(commit=False)
+            alt_user.username = alt_user.username.lower()
+            alt_user.save()
             alt_user = u_form.save()
             p_form.save()
             messages.info(request, "Account Updated Successfully!")
@@ -359,7 +359,7 @@ def tag_delete(request,id):
     tag = Tag.objects.get(id = id)
     current_user = request.user
     if current_user != tag.project.owner:
-        return HttpResponse('<h1>403 Forbidden!</h1>')
+            return HttpResponse('<h1>403 Forbidden!</h1>')
     if request.method == 'POST':
         tag.delete()
         messages.info(request, "Tag Deleted Successfully!")
@@ -380,7 +380,7 @@ def message_create(request, username):
             new_msg = form.save(commit=False)
             new_msg.sender = request.user
             new_msg.receiver = profile_owner
-            new_msg.name = request.user.profile.name
+            new_msg.name = request.user.username
             new_msg.email = request.user.email
             new_msg.save()
             messages.info(request, 'Message Created Successfully!')
@@ -394,6 +394,8 @@ def message_create(request, username):
 @login_required
 def message_inbox(request,username):
     current_user = User.objects.get(username = username)
+    if current_user != request.user:
+        return HttpResponse('<h1>403 Forbidden!</h1>')
     all_messages = current_user.receiver.all()
     new_messages_count = all_messages.filter(is_read = False).count()
     context = {'all_messages':all_messages, 'new_messages_count':new_messages_count}
@@ -430,7 +432,7 @@ def message_reply(request, id):
             new_msg = form.save(commit=False)
             new_msg.sender = sender
             new_msg.receiver = receiver
-            new_msg.name = sender.profile.name
+            new_msg.name = sender.username
             new_msg.email = sender.email
             new_msg.save()
             messages.info(request, "Replied Successfully!")
