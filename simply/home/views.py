@@ -17,7 +17,7 @@ def home(request):
     # objects = User.objects.all()
     
     query,objects = search_profiles(request)
-    result = 1
+    result = 3
 
     paginator = Paginator(objects,result)
     page = request.GET.get('page') if request.GET.get('page') else ''
@@ -90,7 +90,7 @@ def projects(request):
     # projects = Project.objects.all()
 
     query, objects = search_projects(request)
-    result = 1
+    result = 3
 
     paginator = Paginator(objects, result)
     page = request.GET.get('page') if request.GET.get('page') else ''
