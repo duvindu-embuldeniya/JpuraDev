@@ -14,16 +14,16 @@ def create_profile(sender,instance,created,*args,**kwargs):
             user = created_user
         )
 
-    subject = "Welcome"
-    message = "We are glad you are here!"
+        subject = "Welcome"
+        message = "We are glad you are here!"
 
-    send_mail(
-        subject,
-        message,
-        settings.EMAIL_HOST_USER,
-        [instance.email],
-        fail_silently=False,
-    )
+        send_mail(
+            subject,
+            message,
+            settings.EMAIL_HOST_USER,
+            [instance.email],
+            fail_silently=False,
+        )
 
 
 @receiver(post_delete, sender = Profile)
