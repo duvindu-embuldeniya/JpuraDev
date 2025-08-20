@@ -63,6 +63,14 @@ class UserUpdateForm(forms.ModelForm):
         for name,field in self.fields.items():
             field.widget.attrs.update({'class':'input'})   
     
+    def clean_username(self):
+        username = self.cleaned_data.get('username').lower()
+        current_user = self.instance
+
+        if User.objects.filter(username = username).exclude(pk = current_user.pk).exists():
+            raise ValidationError("This Username Has Already Taken!")
+        return username
+    
     def clean_email(self):
         email = self.cleaned_data.get('email')
         current_user = self.instance
